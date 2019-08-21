@@ -19,73 +19,16 @@
  ****************************************************************************/
 #pragma once
 
+#include "../camera/camera.hpp"
 #include "../graphics/renderable.h"
 #include "../physics/movable.hpp"
 #include "../utils/timer.hpp"
-#include "../camera/camera.hpp"
+#include "entity.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <set>
 
 namespace gamelib3 {
-
-enum class EntityType { Renderable, Movable };
-
-/**
- * @brief manages unique ids for access to entities
- */
-struct ID {
-  static const int max_entities = 1000;
-  std::set<int> moveable_ids;
-  std::set<int> renderable_ids;
-
-  /**
-   * @brief get a unique id
-   * @param type for which entity type
-   * @return unique id or -1 if failed
-   */
-  int get_unique_id(EntityType type) {
-    std::set<int> *list = nullptr;
-    switch (type) {
-      case EntityType::Movable:
-        list = &moveable_ids;
-        break;
-      case EntityType::Renderable:
-        list = &renderable_ids;
-        break;
-    }
-    if (list) {
-      for (int i = 0; i < max_entities; ++i) {
-        if (std::find(list->begin(), list->end(), i) == list->end()) {
-          list->insert(i);
-          return i;
-        }
-      }
-    }
-    // ERROR!
-    return -1;
-  }
-
-  /**
-   * @brief frees up an id when an object is removed
-   * @param type entity type
-   * @param id id to free up
-   */
-  void free_unique_id(EntityType type, int id) {
-    std::set<int> *list = nullptr;
-    switch (type) {
-      case EntityType::Movable:
-        list = &moveable_ids;
-        break;
-      case EntityType::Renderable:
-        list = &renderable_ids;
-        break;
-    }
-    if (list) {
-      list->erase(id);
-    }
-  }
-};
 
 /**
  * @brief a struct to manage constant frame rates
@@ -111,22 +54,6 @@ struct FramerateData {
 };
 
 /**
- * @brief encapsulate id and entity
- */
-struct MovablePair {
-  int id;
-  Movable entity;
-};
-
-/**
- * @brief encapsulate id and entity
- */
-struct RenderablePair {
-  int id;
-  Renderable entity;
-};
-
-/**
  * @brief The Engine class
  */
 class Engine {
@@ -139,61 +66,34 @@ class Engine {
    * @param fullscreen
    * @param flags
    */
-  void init(const std::string &window_title, int window_width,
+  void Init(const std::string &window_title, int window_width,
             int window_height, bool fullscreen, int flags = sf::Style::Default);
 
   /**
    * @brief step one frame forward
    */
-  void step();
+  void Step();
 
   /**
-   * @brief addRenderable
-   * @param r
-   * @return
+   * @brief addEntity
+   * @param enitty
    */
-  int addRenderable(Renderable &r);
+  void AddEntity(GameEntity *entity);
 
   /**
-   * @brief addMovable
-   * @param m
-   * @return
+   * @brief remEntity
+   * @param entity
    */
-  int addMovable(Movable &m);
-
-  /**
-   * @brief remRenderable
-   * @param id
-   * @return
-   */
-  bool remRenderable(int id);
-
-  /**
-   * @brief remMovable
-   * @param id
-   * @return
-   */
-  bool remMovable(int id);
-
-  /**
-   * @brief getRenderable
-   * @param id
-   * @return
-   */
-  Renderable *getRenderable(int id);
-
-  /**
-   * @brief getMovable
-   * @param id
-   * @return
-   */
-  Movable *getMovable(int id);
+  void remEntity(GameEntity *entity);
 
   sf::RenderWindow window;
-  sf::View main_view;
+  Camera camera;
 
   /// track if still running
   bool running = true;
+
+  /// physics time step
+  static const float timestep;
 
  private:
   void handle_input();
@@ -201,10 +101,8 @@ class Engine {
   void render();
   void update_physics(const float dt);
 
-  std::vector<Renderable> render_list;
-  std::vector<Movable> movable_list;
+  std::vector<GameEntity *> entity_list;
 
-  ID id_manager;
   FramerateData framerate_manager;
 };
 }  // namespace gamelib3
