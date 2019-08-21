@@ -188,6 +188,9 @@ class Engine {
    */
   Movable *getMovable(int id);
 
+  sf::RenderWindow window;
+  sf::View main_view;
+
   /// track if still running
   bool running = true;
 
@@ -195,9 +198,6 @@ class Engine {
   void handle_input();
   void render();
   void update_physics(const int dt);
-
-  sf::RenderWindow window;
-  sf::View main_view;
 
   std::vector<Renderable> render_list;
   std::vector<Movable> movable_list;
