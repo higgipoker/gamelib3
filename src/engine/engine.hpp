@@ -197,6 +197,7 @@ class Engine {
 
  private:
   void handle_input();
+  void update_camera();
   void render();
   void update_physics(const float dt);
 
