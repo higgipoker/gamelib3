@@ -22,6 +22,7 @@
 #include "../graphics/renderable.h"
 #include "../physics/movable.hpp"
 #include "../utils/timer.hpp"
+#include "../camera/camera.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <set>
@@ -197,7 +198,7 @@ class Engine {
  private:
   void handle_input();
   void render();
-  void update_physics(const int dt);
+  void update_physics(const float dt);
 
   std::vector<Renderable> render_list;
   std::vector<Movable> movable_list;

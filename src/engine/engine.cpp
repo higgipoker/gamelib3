@@ -29,7 +29,7 @@ namespace gamelib3 {
 static const float timestep = 0.01f;
 
 // target fps
-static const int fps = 60.0f;
+static const float fps = 60.0f;
 
 // target frame time
 static const float target_frame_time = 1.0f / fps;
@@ -150,6 +150,13 @@ void Engine::step() {
 }
 
 // -----------------------------------------------------------------------------
+// update_camera
+// -----------------------------------------------------------------------------
+void Engine::update_camera() {
+
+}
+
+// -----------------------------------------------------------------------------
 // render
 // -----------------------------------------------------------------------------
 void Engine::render() {
@@ -167,7 +174,7 @@ void Engine::render() {
 // -----------------------------------------------------------------------------
 // update_physics
 // -----------------------------------------------------------------------------
-void Engine::update_physics(const int dt) {
+void Engine::update_physics(const float dt) {
   for (auto &movable : movable_list) {
     integrate_improved_euler(movable, dt);
   }

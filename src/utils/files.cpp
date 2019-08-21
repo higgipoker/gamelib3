@@ -1,20 +1,19 @@
 #include "files.hpp"
 
 #ifdef _WIN32
+#include "dirent.hpp"
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
 #include <unistd.h>
 #define GetCurrentDir getcwd
-#endif
-#include <filesystem>
-#include <iostream>
-
-//#ifdef __APPLE__
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#endif
+#include <filesystem>
+#include <iostream>
 //#endif
 
 namespace gamelib3 {

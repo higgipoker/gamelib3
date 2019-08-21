@@ -73,6 +73,7 @@ class Vector3 {
   // -------------------------------------------------------------------------
   Vector3(void) {}
   Vector3(float xi, float yi, float zi);
+  Vector3(int xi, int yi, int zi);
   Vector3(float xi, float yi);
   void reset();
 

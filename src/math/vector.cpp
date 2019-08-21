@@ -30,6 +30,12 @@ Vector3::Vector3(float xi, float yi, float zi) {
   z = zi;
 }
 
+Vector3::Vector3(int xi, int yi, int zi) {
+  x = static_cast<float>(xi);
+  y = static_cast<float>(yi);
+  z = static_cast<float>(zi);
+}
+
 // -----------------------------------------------------------------------------
 //  constructor (with initialisers)
 // -----------------------------------------------------------------------------
