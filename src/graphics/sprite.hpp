@@ -54,6 +54,12 @@ class Sprite : public Renderable {
   virtual void Perspectivize(float z, float width,
                              float camera_height) override;
 
+  /**
+   * @brief SetFrame
+   * @param frame
+   */
+  void SetFrame(const int frame);
+
  protected:
   sf::Sprite sprite;
   AutoTexture texture;

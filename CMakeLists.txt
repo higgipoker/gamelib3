@@ -48,6 +48,7 @@ src/graphics/primitives.cpp
 src/graphics/autotexture.cpp
 src/graphics/sprite.cpp
 src/graphics/tiled_background.cpp
+src/graphics/spriteanimation.cpp
 src/engine/entity.cpp
 src/engine/engine.cpp
 src/math/vector.cpp
@@ -56,6 +57,7 @@ src/utils/file.cpp
 src/utils/timer.cpp
 src/utils/grid.cpp
 src/camera/camera.cpp
+src/compass/compass.cpp
 )
 
 # ------------------------------------------------------------------------------

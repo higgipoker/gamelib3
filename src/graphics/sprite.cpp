@@ -2,6 +2,8 @@
 #include "../physics/metrics.hpp"
 #include "../physics/movable.hpp"
 
+#include <cassert>
+
 namespace gamelib3 {
 
 // -----------------------------------------------------------------------------
@@ -43,6 +45,7 @@ void Sprite::Init(const std::string &spritesheet, int rows, int cols) {
 // -----------------------------------------------------------------------------
 void Sprite::Render(sf::RenderTarget &target) {
   if (physical->valid) {
+    sprite.setPosition(physical->position.x, physical->position.y);
     Perspectivize(physical->position.z, physical->width, 20);
   }
   target.draw(sprite);
@@ -86,5 +89,13 @@ void Sprite::Perspectivize(float z, float width, float camera_height) {
     float y_offset = Y_OFFSET_DUE_TO_HEIGHT * z_cm;
     sprite.move(0, -y_offset);
   }
+}
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Sprite::SetFrame(const int frame) {
+  assert(frame < rects.size());
+  sprite.setTextureRect(rects.at(frame));
 }
 }  // namespace gamelib3
