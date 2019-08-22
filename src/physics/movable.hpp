@@ -16,9 +16,11 @@ class Movable {
    */
   virtual void Step(float dt) = 0;
 
- protected:
-  void integrate_improved_euler(float dt);
   Vector3 position, velocity, force, friction;
   float mass = 1;
+
+ protected:
+  void integrate_euler(float dt);
+  void integrate_improved_euler(float dt);
 };
 }  // namespace gamelib3

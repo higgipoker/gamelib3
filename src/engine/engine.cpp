@@ -115,6 +115,7 @@ void Engine::render() {
   std::sort(entity_list.begin(), entity_list.end(), sort_entities);
   window.setView(camera.viewport);
   for (auto &entity : entity_list) {
+    entity->graphical_aspect->SetPosition(entity->physical_aspect->position);
     entity->graphical_aspect->Render(window);
   }
 

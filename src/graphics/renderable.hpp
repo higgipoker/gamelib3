@@ -19,6 +19,17 @@ class Renderable {
    */
   virtual void Render(sf::RenderTarget& target) = 0;
 
+  /**
+   *
+   *
+   */
+  virtual void SetPosition(int x, int y){
+    sprite.setPosition(x, y);
+  }
+  virtual void SetPosition(Vector3 position){
+    sprite.setPosition(position.x, position.y);
+  }
+
   /// z order
   int zorder = 0;
 

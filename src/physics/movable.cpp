@@ -5,6 +5,9 @@
 namespace gamelib3 {
 Movable::~Movable() {}
 
+// -----------------------------------------------------------------------------
+// integrate_improved_euler
+// -----------------------------------------------------------------------------
 void Movable::integrate_improved_euler(float dt){
   // step 1
   force = (force - (velocity.multiply(friction)));
@@ -24,5 +27,31 @@ void Movable::integrate_improved_euler(float dt){
 
   // apply new position
   position = position + dp;
+}
+
+// -----------------------------------------------------------------------------
+// euler_integration
+// -----------------------------------------------------------------------------
+void Movable::integrate_euler(float dt) {
+  // drag
+  force = (force - (velocity.multiply(friction)));
+
+  // acceleration = force / mass
+  Vector3 acceleration = force / mass;
+
+  // difference in velocity = acceleration * difference time
+  Vector3 dv = acceleration * dt;
+
+  // velocity = velocity + difference in velocity
+  velocity += dv;
+
+  // difference in position = velocity * difference time
+  Vector3 dp = velocity * dt;
+
+  // convert to pixels
+  dp = MetersToPixels(dp);
+
+  // update position
+  position += dp;
 }
 }  // namespace gamelib3
