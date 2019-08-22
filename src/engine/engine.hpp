@@ -20,9 +20,10 @@
 #pragma once
 
 #include "../camera/camera.hpp"
-#include "../graphics/renderable.h"
+#include "../graphics/renderable.hpp"
 #include "../physics/movable.hpp"
 #include "../utils/timer.hpp"
+#include "../input/input.hpp"
 #include "entity.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -86,6 +87,12 @@ class Engine {
    */
   void remEntity(GameEntity *entity);
 
+  /**
+   * @brief registerInputCallback
+   * @param callback
+   */
+  void registerInputCallback(InputCallback *callback);
+
   sf::RenderWindow window;
   Camera camera;
 
@@ -102,6 +109,7 @@ class Engine {
   void update_physics(const float dt);
 
   std::vector<GameEntity *> entity_list;
+  std::vector<InputCallback* > input_callbacks;
 
   FramerateData framerate_manager;
 };

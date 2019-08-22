@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../graphics/renderable.h"
+#include "../graphics/renderable.hpp"
 #include "../physics/movable.hpp"
 
 #include <SFML/Graphics/CircleShape.hpp>
@@ -9,6 +9,22 @@
 #include <set>
 
 namespace gamelib3 {
+
+/**
+  * @brief For easy creation of entities without a real movable (only graphic)
+*/
+class DummyMovable : public Movable{
+public:
+  virtual void Step(float dt) override {}
+};
+
+/**
+ * @brief For easy creation of entities without a real graphic (only movable)
+ */
+class DummyRenderable : public Renderable{
+  public:
+    virtual void Render(sf::RenderTarget& target) override {}
+};
 
 class GameEntity {
  public:
@@ -20,14 +36,34 @@ class GameEntity {
   GameEntity(Movable* m, Renderable* r);
 
   /**
+   * @brief GameEntity
+   * @param m
+   */
+  GameEntity(Movable* m);
+
+  /**
+   * @brief GameEntity
+   * @param r
+   */
+  GameEntity(Renderable* r);
+
+  /**
    * @brief ~GameEntity
    */
   virtual ~GameEntity();
 
+  /// the physical aspect
   Movable* physical_aspect = nullptr;
+
+  /// the graphical aspect
   Renderable* graphical_aspect = nullptr;
 
  private:
+   /// dummy for creating entities with only a graphical aspect
+   static DummyMovable dummy_movable;
+
+   /// dummy for creating entities with only a physical aspect
+   static DummyRenderable dummy_renderable;
 };
 
 // -----------------------------------------------------------------------------

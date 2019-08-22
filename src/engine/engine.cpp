@@ -95,14 +95,10 @@ void Engine::Step() {
   // render
   render();
 
-  int count = 0;
-
   // simulate while there is still time left for the frame
   while (framerate_manager.time_left(target_frame_time) >= 0) {
     update_physics(timestep);
-    ++count;
   }
-  std::cout << count << " updates" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,6 +128,13 @@ void Engine::update_physics(const float dt) {
   for (auto &entity : entity_list) {
     entity->physical_aspect->Step(timestep);
   }
+}
+
+// -----------------------------------------------------------------------------
+// registerInputCallback
+// -----------------------------------------------------------------------------
+void Engine::registerInputCallback(InputCallback *callback) {
+  input_callbacks.push_back(callback);
 }
 
 // -----------------------------------------------------------------------------
@@ -195,6 +198,9 @@ void Engine::handle_input() {
         break;
       case sf::Event::Count:
         break;
+    }
+    for (auto &callback : input_callbacks) {
+      callback->HandleEvent(event);
     }
   }
 }

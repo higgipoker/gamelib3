@@ -1,5 +1,5 @@
 #pragma once
-#include "../graphics/renderable.h"
+#include "../graphics/renderable.hpp"
 #include "../math/vector.hpp"
 namespace gamelib3 {
 class Movable {
@@ -17,6 +17,7 @@ class Movable {
   virtual void Step(float dt) = 0;
 
  protected:
+  void integrate_improved_euler(float dt);
   Vector3 position, velocity, force, friction;
   float mass = 1;
 };

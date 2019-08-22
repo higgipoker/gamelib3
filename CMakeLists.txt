@@ -47,6 +47,7 @@ src/graphics/renderable.cpp
 src/graphics/primitives.cpp
 src/graphics/autotexture.cpp
 src/graphics/sprite.cpp
+src/graphics/tiled_background.cpp
 src/engine/entity.cpp
 src/engine/engine.cpp
 src/math/vector.cpp

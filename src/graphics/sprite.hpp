@@ -1,5 +1,5 @@
 #pragma once
-#include "renderable.h"
+#include "renderable.hpp"
 #include "autotexture.hpp"
 namespace gamelib3 {
 
