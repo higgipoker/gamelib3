@@ -66,6 +66,8 @@ void Engine::Init(const std::string &window_title, int window_width,
     vm.width = window_width;
     vm.height = window_height;
     window.create(vm, window_title, flags);
+    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(fps);
   }
 }
 
@@ -87,7 +89,7 @@ void Engine::remEntity(GameEntity *entity) {
 // -----------------------------------------------------------------------------
 void Engine::Step() {
   // for frame time counting
-  framerate_manager.gamestep_timer.Update();
+  framerate_manager.on_frame_started();
 
   // handle user inputs
   handle_input();
@@ -95,10 +97,15 @@ void Engine::Step() {
   // render
   render();
 
+  int steps = 0;
   // simulate while there is still time left for the frame
   while (framerate_manager.time_left(target_frame_time) >= 0) {
     update_physics(timestep);
+    ++steps;
   }
+
+  framerate_manager.on_frame_ended();
+  // std::cout << steps << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +122,6 @@ void Engine::render() {
   std::sort(entity_list.begin(), entity_list.end(), sort_entities);
   window.setView(camera.viewport);
   for (auto &entity : entity_list) {
-    entity->graphical_aspect->SetPosition(entity->physical_aspect->position);
     entity->graphical_aspect->Render(window);
   }
 

@@ -11,19 +11,57 @@
 namespace gamelib3 {
 
 /**
-  * @brief For easy creation of entities without a real movable (only graphic)
-*/
-class DummyMovable : public Movable{
-public:
+ * @brief For easy creation of entities without a real movable (only graphic)
+ */
+class DummyMovable : public Movable {
+ public:
+  /**
+   * @brief Movable
+   */
+  DummyMovable() { valid = false; }
+  /**
+   * @brief Step
+   * @param dt
+   */
   virtual void Step(float dt) override {}
 };
 
 /**
  * @brief For easy creation of entities without a real graphic (only movable)
  */
-class DummyRenderable : public Renderable{
-  public:
-    virtual void Render(sf::RenderTarget& target) override {}
+class DummyRenderable : public Renderable {
+ public:
+  /**
+   * @brief Render
+   * @param target
+   */
+  virtual void Render(sf::RenderTarget& target) override {}
+
+  /**
+   * @brief SetPosition
+   * @param x
+   * @param y
+   */
+  virtual void SetPosition(int x, int y) override{};
+
+  /**
+   * @brief SetPosition
+   * @param position
+   */
+  virtual void SetPosition(Vector3 position) override{};
+
+  /**
+   * @brief move
+   */
+  virtual void Move(int x, int y) override{};
+
+  /**
+   * @brief Perspectivize
+   * @param z
+   * @param distance_from_camera
+   */
+  virtual void Perspectivize(float z, float width,
+                             float distance_from_camera) override{};
 };
 
 class GameEntity {
@@ -59,11 +97,11 @@ class GameEntity {
   Renderable* graphical_aspect = nullptr;
 
  private:
-   /// dummy for creating entities with only a graphical aspect
-   static DummyMovable dummy_movable;
+  /// dummy for creating entities with only a graphical aspect
+  static DummyMovable dummy_movable;
 
-   /// dummy for creating entities with only a physical aspect
-   static DummyRenderable dummy_renderable;
+  /// dummy for creating entities with only a physical aspect
+  static DummyRenderable dummy_renderable;
 };
 
 // -----------------------------------------------------------------------------

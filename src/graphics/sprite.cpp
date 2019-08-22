@@ -1,4 +1,6 @@
 #include "sprite.hpp"
+#include "../physics/metrics.hpp"
+#include "../physics/movable.hpp"
 
 namespace gamelib3 {
 
@@ -39,5 +41,50 @@ void Sprite::Init(const std::string &spritesheet, int rows, int cols) {
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
-void Sprite::Render(sf::RenderTarget &target) { target.draw(sprite); }
+void Sprite::Render(sf::RenderTarget &target) {
+  if (physical->valid) {
+    Perspectivize(physical->position.z, physical->width, 20);
+  }
+  target.draw(sprite);
+}
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Sprite::SetPosition(int x, int y) { sprite.setPosition(x, y); }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Sprite::SetPosition(Vector3 position) {
+  sprite.setPosition(position.x, position.y);
+}
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Sprite::Move(int x, int y) { sprite.move(x, y); }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Sprite::Perspectivize(float z, float width, float camera_height) {
+  // size depending on distance from camera
+  float dimensions = width;
+  float dist_from_camera = camera_height - z;
+  float angular_diameter = 2 * (atanf(dimensions / (2 * dist_from_camera)));
+  float degs = DEGREES(angular_diameter);
+  float sprite_scale_factor = degs / dimensions;
+  float sprite_ratio = dimensions / image_width;
+  sprite_scale_factor *= sprite_ratio;
+  sprite.setScale(sprite_scale_factor, sprite_scale_factor);
+
+  // y offset due to height
+  float z_cm = z * CM_PER_PIXEL;
+
+  if (Floats::greater_than(z_cm, 0)) {
+    float y_offset = Y_OFFSET_DUE_TO_HEIGHT * z_cm;
+    sprite.move(0, -y_offset);
+  }
+}
 }  // namespace gamelib3

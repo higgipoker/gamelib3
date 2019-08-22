@@ -1,4 +1,5 @@
 #pragma once
+#include "../math/vector.hpp"
 
 namespace gamelib3 {
 
@@ -13,7 +14,12 @@ static int MetersToPixels(float meters) {
 static Vector3 MetersToPixels(const Vector3 &v) {
   return Vector3(MetersToPixels(v.x), MetersToPixels(v.y), MetersToPixels(v.z));
 }
-const float Y_OFFSET_DUE_TO_HEIGHT = 0.5f;
-const float CM_PER_PIXEL = 7.6f;
 static const float CAMERA_HEIGHT = static_cast<float>(MetersToPixels(4.0f));
+
+//
+// these vals are depending on the gfx style and should be set from
+// outside by the game
+//
+static float CM_PER_PIXEL = 0.5f;
+static float Y_OFFSET_DUE_TO_HEIGHT = 7.6f;
 }  // namespace gamelib3

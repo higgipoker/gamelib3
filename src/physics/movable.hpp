@@ -1,7 +1,10 @@
 #pragma once
-#include "../graphics/renderable.hpp"
+
 #include "../math/vector.hpp"
 namespace gamelib3 {
+
+class Renderable;
+
 class Movable {
  public:
   Movable() = default;
@@ -18,9 +21,21 @@ class Movable {
 
   Vector3 position, velocity, force, friction;
   float mass = 1;
+  float width = 1;
+  Renderable *renderable = nullptr;
+  bool valid = true; // dummy sets this to false;
 
  protected:
+  /**
+   * @brief integrate_euler
+   * @param dt
+   */
   void integrate_euler(float dt);
+
+  /**
+   * @brief integrate_improved_euler
+   * @param dt
+   */
   void integrate_improved_euler(float dt);
 };
 }  // namespace gamelib3

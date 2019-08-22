@@ -1,5 +1,6 @@
 #include "movable.hpp"
 
+#include "../graphics/renderable.hpp"
 #include "metrics.hpp"
 
 namespace gamelib3 {
@@ -8,7 +9,7 @@ Movable::~Movable() {}
 // -----------------------------------------------------------------------------
 // integrate_improved_euler
 // -----------------------------------------------------------------------------
-void Movable::integrate_improved_euler(float dt){
+void Movable::integrate_improved_euler(float dt) {
   // step 1
   force = (force - (velocity.multiply(friction)));
   Vector3 acceleration = force / mass;

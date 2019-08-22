@@ -1,12 +1,12 @@
 #pragma once
-#include "renderable.hpp"
 #include "autotexture.hpp"
+#include "renderable.hpp"
 namespace gamelib3 {
 
-class Sprite : public Renderable{
+class Sprite : public Renderable {
  public:
-    Sprite() = default;
-    /**
+  Sprite() = default;
+  /**
    * @brief Sprite
    * @param spritesheet
    * @param rows
@@ -26,10 +26,41 @@ class Sprite : public Renderable{
    * @brief Render
    * @param target
    */
-  void Render(sf::RenderTarget &target) override;
+  void Render(sf::RenderTarget& target) override;
 
-protected:
-  AutoTexture tex;
+  /**
+   * @brief SetPosition
+   * @param x
+   * @param y
+   */
+  virtual void SetPosition(int x, int y) override;
+
+  /**
+   * @brief SetPosition
+   * @param position
+   */
+  virtual void SetPosition(Vector3 position) override;
+
+  /**
+   * @brief move
+   */
+  virtual void Move(int x, int y) override;
+
+  /**
+   * @brief Perspectivize
+   * @param z
+   * @param distance_from_camera
+   */
+  virtual void Perspectivize(float z, float width,
+                             float camera_height) override;
+
+ protected:
+  sf::Sprite sprite;
+  AutoTexture texture;
+  std::vector<sf::IntRect> rects;
+  float image_width = 0;
+  float image_height = 0;
+  float sprite_scale_factor = 0;
 };
 
 }  // namespace gamelib3

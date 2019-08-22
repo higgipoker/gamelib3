@@ -9,6 +9,8 @@
 
 namespace gamelib3 {
 
+class Movable;
+
 class Renderable {
  public:
   Renderable() = default;
@@ -20,27 +22,35 @@ class Renderable {
   virtual void Render(sf::RenderTarget& target) = 0;
 
   /**
-   *
-   *
+   * @brief SetPosition
+   * @param x
+   * @param y
    */
-  virtual void SetPosition(int x, int y){
-    sprite.setPosition(x, y);
-  }
-  virtual void SetPosition(Vector3 position){
-    sprite.setPosition(position.x, position.y);
-  }
+  virtual void SetPosition(int x, int y) = 0;
+
+  /**
+   * @brief SetPosition
+   * @param position
+   */
+  virtual void SetPosition(Vector3 position) = 0;
+
+  /**
+   * @brief move
+   */
+  virtual void Move(int x, int y) = 0;
+
+  /**
+   * @brief Perspectivize
+   * @param z
+   * @param distance_from_camera
+   */
+  virtual void Perspectivize(float z, float width, float camera_height) = 0;
 
   /// z order
   int zorder = 0;
 
- protected:
-  sf::Sprite sprite;
-  AutoTexture texture;
-  std::vector<sf::IntRect> rects;
-  int id = -1;
-  float image_width = 0;
-  float image_height = 0;
-  float sprite_scale_factor = 0;
+  /// access t physical aspect
+  Movable *physical;
 };
 
 }  // namespace gamelib3

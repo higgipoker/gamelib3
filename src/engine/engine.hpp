@@ -21,37 +21,62 @@
 
 #include "../camera/camera.hpp"
 #include "../graphics/renderable.hpp"
+#include "../input/input.hpp"
 #include "../physics/movable.hpp"
 #include "../utils/timer.hpp"
-#include "../input/input.hpp"
 #include "entity.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <iostream>
 #include <set>
-
 namespace gamelib3 {
 
 /**
  * @brief a struct to manage constant frame rates
  */
 struct FramerateData {
+  FramerateData() { second_timer.restart(); }
+  /**
+   * @brief on_frame_started
+   */
+  inline void on_frame_started() {
+    gamestep_timer.restart();
+    frame_start_time =
+        static_cast<float>(gamestep_timer.getElapsedTime().asMilliseconds());
+  }
+
+  /**
+   * @brief on_frame_ended
+   */
+  inline void on_frame_ended() {
+    float elapsed = second_timer.getElapsedTime().asMilliseconds();
+    framecount++;
+    if (elapsed >= 1000) {
+      fps = framecount;
+      framecount = 0;
+      second_timer.restart();
+      // std::cout << "frames: " << fps << std::endl;
+    }
+  }
+
   /**
    * @brief how long left to do the current frame
    * @param target_frame_time desired frame time
    * @return time left
    */
   inline float time_left(float target_frame_time) {
-    float newnewtime = gamestep_timer.GetLiveTime();
-    float gametime = gamestep_timer.GetFrameTime();
-    float frame_time = newnewtime - gametime;
+    float newnewtime =
+        static_cast<float>(gamestep_timer.getElapsedTime().asMilliseconds());
+    float frame_time = newnewtime - frame_start_time;
     float target = target_frame_time * 1000;
     return target - frame_time;
   }
-  Timer gamestep_timer;
+  sf::Clock gamestep_timer;
+  sf::Clock second_timer;
+  float frame_start_time = 0;
+  float framecount = 0;
   float fps = 0;
-  float frames_this_second = 0;
-  float lastTime = 0.0f;
-  float fps_timer = 0.0f;
 };
 
 /**
@@ -109,7 +134,7 @@ class Engine {
   void update_physics(const float dt);
 
   std::vector<GameEntity *> entity_list;
-  std::vector<InputCallback* > input_callbacks;
+  std::vector<InputCallback *> input_callbacks;
 
   FramerateData framerate_manager;
 };
