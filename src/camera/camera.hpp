@@ -8,7 +8,17 @@ namespace gamelib3 {
 
 class Camera : public Movable {
  public:
+  /**
+   * @brief Step
+   * @param dt
+   */
   virtual void Step(float dt) override;
+
+  /**
+   * @brief PopulateAnimations
+   */
+  virtual void PopulateAnimations() override{};
+
   sf::View viewport;
 
  protected:

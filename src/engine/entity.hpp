@@ -24,6 +24,11 @@ class DummyMovable : public Movable {
    * @param dt
    */
   virtual void Step(float dt) override {}
+
+  /**
+   * @brief PopulateAnimations
+   */
+  virtual void PopulateAnimations() override{};
 };
 
 /**

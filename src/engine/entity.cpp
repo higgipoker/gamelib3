@@ -11,6 +11,8 @@ GameEntity::GameEntity(Movable *m, Renderable *r)
     : physical_aspect(m), graphical_aspect(r) {
   physical_aspect->renderable = r;
   graphical_aspect->physical = m;
+
+  physical_aspect->PopulateAnimations();
 }
 
 // -----------------------------------------------------------------------------

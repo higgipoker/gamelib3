@@ -64,6 +64,7 @@ class Sprite : public Renderable {
   sf::Sprite sprite;
   AutoTexture texture;
   std::vector<sf::IntRect> rects;
+  int current_frame = 0;
   float image_width = 0;
   float image_height = 0;
   float sprite_scale_factor = 0;

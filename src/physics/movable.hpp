@@ -29,6 +29,11 @@ class Movable {
   void SetPosition(int x, int y);
 
   /**
+   * @brief PopulateAnimations
+   */
+  virtual void PopulateAnimations() = 0;
+
+  /**
    * @brief addAnimation
    * @param a_sprite_anim
    */

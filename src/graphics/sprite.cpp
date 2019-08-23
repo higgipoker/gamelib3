@@ -95,7 +95,10 @@ void Sprite::Perspectivize(float z, float width, float camera_height) {
 //
 // -----------------------------------------------------------------------------
 void Sprite::SetFrame(const int frame) {
-  assert(frame < rects.size());
-  sprite.setTextureRect(rects.at(frame));
+  if (frame != current_frame) {
+    assert(frame < rects.size());
+    sprite.setTextureRect(rects.at(frame));
+    current_frame = frame;
+  }
 }
 }  // namespace gamelib3

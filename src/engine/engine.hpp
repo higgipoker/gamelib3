@@ -20,7 +20,9 @@
 #pragma once
 
 #include "../camera/camera.hpp"
+#include "../debug/debug.hpp"
 #include "../graphics/renderable.hpp"
+#include "../input/gamepad.hpp"
 #include "../input/input.hpp"
 #include "../physics/movable.hpp"
 #include "../utils/timer.hpp"
@@ -85,6 +87,20 @@ struct FramerateData {
 class Engine {
  public:
   /**
+   * @brief Engine
+   */
+  Engine();
+
+  /**
+   */
+  ~Engine();
+
+  /**
+   * @brief Shutdown
+   */
+  void Shutdown();
+
+  /**
    * @brief sets up the game
    * @param window_title
    * @param window_width
@@ -120,6 +136,7 @@ class Engine {
 
   sf::RenderWindow window;
   Camera camera;
+  bool paused = false;
 
   /// track if still running
   bool running = true;
@@ -137,5 +154,8 @@ class Engine {
   std::vector<InputCallback *> input_callbacks;
 
   FramerateData framerate_manager;
+  //  Debug debug;
+  sf::Clock ui_clock;
+  Gamepad gamepad;
 };
 }  // namespace gamelib3

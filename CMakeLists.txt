@@ -58,6 +58,15 @@ src/utils/timer.cpp
 src/utils/grid.cpp
 src/camera/camera.cpp
 src/compass/compass.cpp
+src/input/controller.cpp
+src/input/gamepad.cpp
+src/debug/debug.cpp
+src/imgui/imgui.cpp
+src/imgui/imgui_draw.cpp
+src/imgui/imgui_widgets.cpp
+src/imgui/imgui_demo.cpp
+src/imgui/imgui-SFML.cpp
+
 )
 
 # ------------------------------------------------------------------------------
