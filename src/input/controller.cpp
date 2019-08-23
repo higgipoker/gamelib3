@@ -25,12 +25,10 @@ void Controller::Poll() {
           fire_tap_length) {
         notify(ControllerEvent(ControllerEventID::FireTap,
                                ControllerEventStatus::Released));
-        std::cout << "fire tap" << std::endl;
       } else {
         notify(ControllerEvent(
             ControllerEventID::Fire, ControllerEventStatus::Released,
             states[static_cast<size_t>(InputState::FireLengthCached)]));
-        std::cout << "fire up" << std::endl;
       }
     }
 
@@ -38,11 +36,16 @@ void Controller::Poll() {
     if (states[static_cast<size_t>(InputState::FireDown)]) {
       notify(ControllerEvent(ControllerEventID::Fire,
                              ControllerEventStatus::Pressed));
-      std::cout << "fire down" << std::endl;
     }
   }
 }
 
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Controller::AddListener(ControllerListener *listener) {
+  listeners.push_back(listener);
+}
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------

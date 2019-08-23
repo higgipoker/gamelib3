@@ -126,6 +126,12 @@ class Controller {
   void Poll();
 
   /**
+   * @brief AddListener
+   * @param listener
+   */
+  void AddListener(ControllerListener* listener);
+
+  /**
    * @brief Log
    */
   inline void Log() {
@@ -145,6 +151,10 @@ class Controller {
               << std::endl;
   }
 
+  std::array<int, static_cast<size_t>(InputState::InputStates)> states{
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
  protected:
   /**
    * @brief on_poll
@@ -158,10 +168,7 @@ class Controller {
   std::vector<ControllerListener *> listeners;
   /// count fire ticks
   std::array<int, 4> fire_ticks{0, 0, 0, 0};
-
-  std::array<int, static_cast<size_t>(InputState::InputStates)> states{
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  /// how fast is a tap
   static const int fire_tap_length = 5;
 };
 }  // namespace gamelib3

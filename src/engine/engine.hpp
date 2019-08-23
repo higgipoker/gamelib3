@@ -144,6 +144,8 @@ class Engine {
   /// physics time step
   static const float timestep;
 
+  Gamepad gamepad;
+
  private:
   void handle_input();
   void update_camera();
@@ -156,6 +158,5 @@ class Engine {
   FramerateData framerate_manager;
   //  Debug debug;
   sf::Clock ui_clock;
-  Gamepad gamepad;
 };
 }  // namespace gamelib3
