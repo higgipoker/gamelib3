@@ -19,8 +19,8 @@ Sprite::Sprite(const std::string &spritesheet, int rows, int cols) {
 void Sprite::Init(const std::string &spritesheet, int rows, int cols) {
   texture.Initialize(std::move(spritesheet));
   sprite.setTexture(texture());
-  image_width = texture().getSize().x / static_cast<float>(cols);
-  image_height = texture().getSize().y / static_cast<float>(rows);
+  render_width = texture().getSize().x / static_cast<float>(cols);
+  render_height = texture().getSize().y / static_cast<float>(rows);
 
   // set up the coordinates of each frame
   float sprite_width = static_cast<float>(texture().getSize().x / cols);
@@ -44,29 +44,36 @@ void Sprite::Init(const std::string &spritesheet, int rows, int cols) {
 //
 // -----------------------------------------------------------------------------
 void Sprite::Render(sf::RenderTarget &target) {
-  if (physical->valid) {
-    sprite.setPosition(physical->position.x, physical->position.y);
-    Perspectivize(physical->position.z, physical->width, 20);
-  }
+  anchor();
   target.draw(sprite);
+  render_primitives(target);
 }
 
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
-void Sprite::SetPosition(int x, int y) { sprite.setPosition(x, y); }
+void Sprite::SetPosition(int x, int y) {
+  position.x = x;
+  position.y = y;
+  sprite.setPosition(x, y);
+}
 
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
-void Sprite::SetPosition(Vector3 position) {
+void Sprite::SetPosition(Vector3 _position) {
+  position = _position;
   sprite.setPosition(position.x, position.y);
 }
 
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
-void Sprite::Move(int x, int y) { sprite.move(x, y); }
+void Sprite::Move(int x, int y) {
+  position.x += x;
+  position.y += y;
+  sprite.move(x, y);
+}
 
 // -----------------------------------------------------------------------------
 //
@@ -78,7 +85,7 @@ void Sprite::Perspectivize(float z, float width, float camera_height) {
   float angular_diameter = 2 * (atanf(dimensions / (2 * dist_from_camera)));
   float degs = DEGREES(angular_diameter);
   float sprite_scale_factor = degs / dimensions;
-  float sprite_ratio = dimensions / image_width;
+  float sprite_ratio = dimensions / render_width;
   sprite_scale_factor *= sprite_ratio;
   sprite.setScale(sprite_scale_factor, sprite_scale_factor);
 
@@ -89,6 +96,8 @@ void Sprite::Perspectivize(float z, float width, float camera_height) {
     float y_offset = Y_OFFSET_DUE_TO_HEIGHT * z_cm;
     sprite.move(0, -y_offset);
   }
+
+  bounds = sprite.getGlobalBounds();
 }
 
 // -----------------------------------------------------------------------------

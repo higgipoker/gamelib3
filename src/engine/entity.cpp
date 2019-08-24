@@ -10,7 +10,6 @@ DummyRenderable GameEntity::dummy_renderable;
 GameEntity::GameEntity(Movable *m, Renderable *r)
     : physical_aspect(m), graphical_aspect(r) {
   physical_aspect->renderable = r;
-  graphical_aspect->physical = m;
 
   physical_aspect->PopulateAnimations();
 }
@@ -27,9 +26,7 @@ GameEntity::GameEntity(Movable *m)
 //
 // -----------------------------------------------------------------------------
 GameEntity::GameEntity(Renderable *r)
-    : physical_aspect(&dummy_movable), graphical_aspect(r) {
-  graphical_aspect->physical = &dummy_movable;
-}
+    : physical_aspect(&dummy_movable), graphical_aspect(r) {}
 
 // -----------------------------------------------------------------------------
 //

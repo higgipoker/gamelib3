@@ -23,6 +23,17 @@
 namespace gamelib3 {
 
 /**
+ * @brief The PrimitiveLine struct
+ */
+struct PrimitiveLine {
+  PrimitiveLine(Vector3 _p1, Vector3 _p2) {
+    p1 = _p1;
+    p2 = _p2;
+  }
+  Vector3 p1, p2;
+};
+
+/**
  * @brief The Primitives class
  */
 class Primitives {
@@ -34,8 +45,28 @@ class Primitives {
    * @param point2
    * @param thickness
    */
-  static void drawLine(sf::RenderTarget &target, const Vector3 &point1,
-                       const Vector3 &point2, int thickness);
+  static void Line(sf::RenderTarget &target, const Vector3 &point1,
+                   const Vector3 &point2, int thickness);
+
+  /**
+   * @brief drawLine
+   * @param target
+   * @param point1
+   * @param point2
+   * @param thickness
+   */
+  static void Line(sf::RenderTarget &target, const Vector3 &point1,
+                   const Vector3 &point2);
+
+  /**
+   * @brief Rect
+   * @param target
+   * @param x
+   * @param y
+   * @param w
+   * @param h
+   */
+  static void Rect(sf::RenderTarget &target, int x, int y, int w, int h);
 
   /**
    * @brief arc
@@ -48,7 +79,7 @@ class Primitives {
    * @param segments
    * @param thickness
    */
-  static void arc(sf::RenderTarget &target, float x, float y, float radius,
+  static void Arc(sf::RenderTarget &target, float x, float y, float radius,
                   float start, float end, int segments, int thickness);
 };
 

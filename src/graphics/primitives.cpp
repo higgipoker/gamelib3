@@ -25,8 +25,8 @@ namespace gamelib3 {
 // -----------------------------------------------------------------------------
 // drawLine
 // -----------------------------------------------------------------------------
-void Primitives::drawLine(sf::RenderTarget &target, const Vector3 &point1,
-                          const Vector3 &point2, int thickness) {
+void Primitives::Line(sf::RenderTarget &target, const Vector3 &point1,
+                      const Vector3 &point2, int thickness) {
   sf::Vertex vertices[4];
   Vector3 direction = point2 - point1;
   Vector3 unit_direction = direction / std::sqrt(direction.x * direction.x +
@@ -60,12 +60,55 @@ void Primitives::drawLine(sf::RenderTarget &target, const Vector3 &point1,
 }
 
 // -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Line(sf::RenderTarget &target, const Vector3 &point1,
+          const Vector3 &point2) {
+  sf::Vertex vertices[2];
+  vertices[0].position.x = point1.x;
+  vertices[0].position.y = point1.y;
+
+  vertices[1].position.x = point2.x;
+  vertices[1].position.y = point2.y;
+
+  for (int i = 0; i < 2; ++i) {
+    vertices[i].color = sf::Color(255, 255, 255, 255);
+  }
+  target.draw(vertices, 4, sf::Lines);
+}
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+void Primitives::Rect(sf::RenderTarget &target, int x, int y, int w, int h) {
+  const int number_verts = 5;
+  sf::Vertex vertices[number_verts];
+  vertices[0].position.x = x;
+  vertices[0].position.y = y;
+
+  vertices[1].position.x = x + w;
+  vertices[1].position.y = y;
+
+  vertices[2].position.x = x + w;
+  vertices[2].position.y = y + h;
+
+  vertices[3].position.x = x;
+  vertices[3].position.y = y + h;
+
+  vertices[4].position.x = x;
+  vertices[4].position.y = y;
+
+  for (int i = 0; i < number_verts; ++i) {
+    vertices[i].color = sf::Color(255, 255, 255, 255);
+  }
+  target.draw(vertices, number_verts, sf::LinesStrip);
+}
+
+// -----------------------------------------------------------------------------
 // Arc
 // -----------------------------------------------------------------------------
-void Primitives::arc(sf::RenderTarget &target, float x, float y, float radius,
-                     float start, float end, int segments,
-                     int thickness) {
-
+void Primitives::Arc(sf::RenderTarget &target, float x, float y, float radius,
+                     float start, float end, int segments, int thickness) {
   // construct the vertex list
   std::vector<sf::Vertex> vertices;
 
@@ -89,7 +132,7 @@ void Primitives::arc(sf::RenderTarget &target, float x, float y, float radius,
           sf::Vertex(sf::Vector2f(ax, ay), sf::Color(255, 255, 255, 255)));
 
       if (segments_drawn) {
-        drawLine(target, Vector3(lastx, lasty), Vector3(ax, ay), thickness);
+        Line(target, Vector3(lastx, lasty), Vector3(ax, ay), thickness);
       }
 
       lastx = ax;
@@ -107,4 +150,4 @@ void Primitives::arc(sf::RenderTarget &target, float x, float y, float radius,
   target.draw(&vertices[0], vertices.size(), sf::LinesStrip);
 }
 
-} // namespace gamelib3
+}  // namespace gamelib3

@@ -39,7 +39,7 @@ class Sprite : public Renderable {
    * @brief SetPosition
    * @param position
    */
-  virtual void SetPosition(Vector3 position) override;
+  virtual void SetPosition(Vector3 _position) override;
 
   /**
    * @brief move
@@ -60,13 +60,17 @@ class Sprite : public Renderable {
    */
   void SetFrame(const int frame);
 
+  /**
+   * @brief operator ()
+   * @return
+   */
+  inline sf::Sprite& operator()() { return sprite; }
+
  protected:
   sf::Sprite sprite;
   AutoTexture texture;
   std::vector<sf::IntRect> rects;
   int current_frame = 0;
-  float image_width = 0;
-  float image_height = 0;
   float sprite_scale_factor = 0;
 };
 
