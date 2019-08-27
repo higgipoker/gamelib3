@@ -79,6 +79,8 @@ void Engine::Init(const std::string &window_title, int window_width,
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(fps);
   }
+  camera.viewport.setCenter(window_width / 2, window_height / 2);
+  camera.viewport.setSize(window_width, window_height);
 }
 
 // -----------------------------------------------------------------------------
@@ -108,15 +110,14 @@ void Engine::Step() {
 
   // handle user inputs
   handle_input();
+  gamepad.Poll();
 
   // render
   render();
 
-  int steps = 0;
   // simulate while there is still time left for the frame
   while (framerate_manager.time_left(target_frame_time) >= 0) {
     update_physics(timestep);
-    ++steps;
   }
 
   framerate_manager.on_frame_ended();
@@ -162,8 +163,6 @@ void Engine::registerInputCallback(InputCallback *callback) {
 // handle_input
 // -----------------------------------------------------------------------------
 void Engine::handle_input() {
-  gamepad.Poll();
-
   static sf::Event event;
   while (window.pollEvent(event)) {
     switch (event.type) {

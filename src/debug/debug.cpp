@@ -74,7 +74,7 @@ void Debug::update() {
     }
     std::ostringstream title;
     title << "(past " << fps_history.size() << " seconds)";
-    if (values.size()) {
+    if (!values.empty()) {
       if (fabsf(values.back() - shown_fps) > 1) {
         shown_fps = values.back();
       }

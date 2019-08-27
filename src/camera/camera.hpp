@@ -12,17 +12,17 @@ class Camera : public Movable {
    * @brief Step
    * @param dt
    */
-  virtual void Step(float dt) override;
+  void Step(float dt) override;
 
   /**
    * @brief PopulateAnimations
    */
-  virtual void PopulateAnimations() override{};
+  void PopulateAnimations() override{};
 
   sf::View viewport;
 
  protected:
-  Movable *following;
+  Movable *following = nullptr;
 };
 
 }  // namespace gamelib3

@@ -52,8 +52,8 @@ void Primitives::Line(sf::RenderTarget &target, const Vector3 &point1,
   vertices[3].position.x = tmp4.x;
   vertices[3].position.y = tmp4.y;
 
-  for (int i = 0; i < 4; ++i) {
-    vertices[i].color = sf::Color(255, 255, 255, 255);
+  for (auto vertex : vertices) {
+    vertex.color = sf::Color(255, 255, 255, 255);
   }
 
   target.draw(vertices, 4, sf::Quads);
@@ -71,8 +71,8 @@ void Line(sf::RenderTarget &target, const Vector3 &point1,
   vertices[1].position.x = point2.x;
   vertices[1].position.y = point2.y;
 
-  for (int i = 0; i < 2; ++i) {
-    vertices[i].color = sf::Color(255, 255, 255, 255);
+  for (auto vertex : vertices) {
+    vertex.color = sf::Color(255, 255, 255, 255);
   }
   target.draw(vertices, 4, sf::Lines);
 }
@@ -98,8 +98,8 @@ void Primitives::Rect(sf::RenderTarget &target, int x, int y, int w, int h) {
   vertices[4].position.x = x;
   vertices[4].position.y = y;
 
-  for (int i = 0; i < number_verts; ++i) {
-    vertices[i].color = sf::Color(255, 255, 255, 255);
+  for (auto vertex : vertices) {
+    vertex.color = sf::Color(255, 255, 255, 255);
   }
   target.draw(vertices, number_verts, sf::LinesStrip);
 }

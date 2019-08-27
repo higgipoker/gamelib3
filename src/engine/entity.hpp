@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../graphics/renderable.hpp"
+#include "../input/controller.hpp"
 #include "../physics/movable.hpp"
 
 #include <SFML/Graphics/CircleShape.hpp>
@@ -23,12 +24,12 @@ class DummyMovable : public Movable {
    * @brief Step
    * @param dt
    */
-  virtual void Step(float dt) override {}
+  void Step(float dt) override {}
 
   /**
    * @brief PopulateAnimations
    */
-  virtual void PopulateAnimations() override{};
+  void PopulateAnimations() override{};
 };
 
 /**
@@ -40,33 +41,33 @@ class DummyRenderable : public Renderable {
    * @brief Render
    * @param target
    */
-  virtual void Render(sf::RenderTarget& target) override {}
+  void Render(sf::RenderTarget& target) override {}
 
   /**
    * @brief SetPosition
    * @param x
    * @param y
    */
-  virtual void SetPosition(int x, int y) override{};
+  void SetPosition(int x, int y) override{};
 
   /**
    * @brief SetPosition
    * @param position
    */
-  virtual void SetPosition(Vector3 position) override{};
+  void SetPosition(Vector3 position) override{};
 
   /**
    * @brief move
    */
-  virtual void Move(int x, int y) override{};
+  void Move(int x, int y) override{};
 
   /**
    * @brief Perspectivize
    * @param z
    * @param distance_from_camera
    */
-  virtual void Perspectivize(float z, float width,
-                             float distance_from_camera) override{};
+  void Perspectivize(float z, float width,
+                     float distance_from_camera) override{};
 };
 
 class GameEntity {
@@ -100,6 +101,8 @@ class GameEntity {
 
   /// the graphical aspect
   Renderable* graphical_aspect = nullptr;
+
+  Controller* controller = nullptr;
 
  private:
   /// dummy for creating entities with only a graphical aspect

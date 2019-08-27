@@ -257,13 +257,18 @@ Vector3 Vector3::multiply(const Vector3 &rhs) const {
 }
 
 // -----------------------------------------------------------------------------
+// multiply2d
+// -----------------------------------------------------------------------------
+Vector3 Vector3::multiply2d(const float rhs) const {
+  return Vector3(x * rhs, y * rhs, z);
+}
+
+// -----------------------------------------------------------------------------
 //   test for equality
 // -----------------------------------------------------------------------------
 bool Vector3::equals(const Vector3 &v) {
-  if (Floats::equal(x, v.x) && Floats::equal(y, v.y) && Floats::equal(z, v.z)) {
-    return true;
-  }
-  return false;
+  return Floats::equal(x, v.x) && Floats::equal(y, v.y) &&
+         Floats::equal(z, v.z);
 }
 
 // -----------------------------------------------------------------------------

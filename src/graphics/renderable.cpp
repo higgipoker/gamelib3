@@ -29,17 +29,22 @@ void Renderable::anchor() {
     case AnchorType::None:
       break;
     case AnchorType::TopLeft:
+      Move(-bounds.width / 2, -bounds.height / 2);
       break;
     case AnchorType::TopRight:
+      Move(bounds.width / 2, -bounds.height / 2);
       break;
     case AnchorType::BottomRight:
+      Move(bounds.width / 2, bounds.height / 2);
       break;
     case AnchorType::BottomLeft:
+      Move(-bounds.width / 2, bounds.height / 2);
       break;
     case AnchorType::TopCenter:
+      Move(0, -bounds.height / 2);
       break;
     case AnchorType::BottomCenter:
-      Move(0, -bounds.height / 2);
+      Move(0, bounds.height / 2);
       break;
     case AnchorType::Center:
       break;

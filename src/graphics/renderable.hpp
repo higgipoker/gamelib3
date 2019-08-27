@@ -66,6 +66,9 @@ class Renderable {
    */
   void AddPrimitive(sf::Shape* primitive);
 
+  /// actual bounds on screen after transforms
+  sf::FloatRect bounds;
+
   /// z order
   int zorder = 0;
 
@@ -88,9 +91,6 @@ class Renderable {
 
   /// track position
   Vector3 position;
-
-  /// actual bounds on screen after transforms
-  sf::FloatRect bounds;
 
   /// a list of primitives to draw
   std::vector<sf::Shape*> primitives;

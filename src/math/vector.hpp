@@ -34,19 +34,25 @@ enum INDEX { X = 0, Y = 1, Z = 2 };
 namespace Floats {
 
 static bool equal(float a, float b, float epsilon = TOL) {
-  return (fabs(a - b) <= epsilon);
+  return (std::fabs(a - b) <= epsilon);
 }
 
 static bool greater_than(float a, float b, float epsilon = TOL) {
-  return (a - b) > ((fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+  return (a - b) >
+         ((std::fabs(a) < std::fabs(b) ? std::fabs(b) : std::fabs(a)) *
+          epsilon);
 }
 
 static bool less_than(float a, float b, float epsilon = TOL) {
-  return (b - a) > ((fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+  return (b - a) >
+         ((std::fabs(a) < std::fabs(b) ? std::fabs(b) : std::fabs(a)) *
+          epsilon);
 }
 
 static bool abs_less_than(float a, float b, float epsilon = TOL) {
-  return (b - fabs(a)) > ((fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+  return (b - std::fabs(a)) >
+         ((std::fabs(a) < std::fabs(b) ? std::fabs(b) : std::fabs(a)) *
+          epsilon);
 }
 
 }  // namespace Floats
@@ -113,6 +119,7 @@ class Vector3 {
   Vector3 normalizeToUnits();
   Vector3 rotate(float a, float x_origin = 0, float y_origin = 0) const;
   Vector3 multiply(const Vector3 &rhs) const;
+  Vector3 multiply2d(const float rhs) const;
 
   // -------------------------------------------------------------------------
   // scaler operations

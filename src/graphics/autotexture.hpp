@@ -13,7 +13,7 @@ namespace gamelib3 {
  */
 struct CountedTexture {
   CountedTexture(std::shared_ptr< sf::Texture > a_texture, int a_count)
-    : texture(a_texture)
+    : texture(std::move(a_texture))
     , count(a_count) {
   }
   std::shared_ptr< sf::Texture > texture;

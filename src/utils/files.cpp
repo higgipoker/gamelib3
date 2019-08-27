@@ -8,7 +8,7 @@
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #include <dirent.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string.h>
 #include <sys/types.h>
 #endif
@@ -40,9 +40,9 @@ std::set<std::string> Files::getFilesInFolder(std::string folder) {
 
   DIR *dir;
   struct dirent *ent;
-  if ((dir = opendir(folder.c_str())) != NULL) {
+  if ((dir = opendir(folder.c_str())) != nullptr) {
     /* print all the files and directories within directory */
-    while ((ent = readdir(dir)) != NULL) {
+    while ((ent = readdir(dir)) != nullptr) {
       if (strncmp(ent->d_name, ".", sizeof(ent->d_name)) == 0 ||
           strncmp(ent->d_name, "..", sizeof(ent->d_name)) == 0)
         continue;

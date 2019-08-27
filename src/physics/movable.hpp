@@ -66,8 +66,9 @@ class Movable {
    */
   virtual void Animate(float in_dt);
 
-  Vector3 position, velocity, force, friction;
-  float mass = 1;
+  Vector3 position, velocity, force;
+  float co_friction = 0.0f;
+  float mass = 10;
   float width = 1;
   Renderable* renderable = nullptr;
   bool valid = true;  // dummy sets this to false;

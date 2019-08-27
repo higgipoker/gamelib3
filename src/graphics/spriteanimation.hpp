@@ -50,7 +50,7 @@ class SpriteAnimation {
    * @brief setStpeed
    * @param a_seped
    */
-  void SetStpeed(int a_seped);
+  void SetStpeed(int a_speed);
 
   /**
    * @brief currentFrame

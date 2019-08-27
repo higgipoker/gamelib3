@@ -17,7 +17,7 @@ Sprite::Sprite(const std::string &spritesheet, int rows, int cols) {
 // init_sprite
 // -----------------------------------------------------------------------------
 void Sprite::Init(const std::string &spritesheet, int rows, int cols) {
-  texture.Initialize(std::move(spritesheet));
+  texture.Initialize(spritesheet);
   sprite.setTexture(texture());
   render_width = texture().getSize().x / static_cast<float>(cols);
   render_height = texture().getSize().y / static_cast<float>(rows);

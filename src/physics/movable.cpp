@@ -3,6 +3,8 @@
 #include "../graphics/renderable.hpp"
 #include "metrics.hpp"
 
+#include <iostream>
+
 namespace gamelib3 {
 Movable::~Movable() {}
 
@@ -10,7 +12,7 @@ Movable::~Movable() {}
 //
 // -----------------------------------------------------------------------------
 void Movable::Step(float dt) {
-  integrate_euler(dt);
+  integrate_improved_euler(dt);
   Animate(dt);
 }
 
@@ -29,57 +31,45 @@ void Movable::SetPosition(int x, int y) {
 // -----------------------------------------------------------------------------
 void Movable::integrate_improved_euler(float dt) {
   // step 1
-  force = (force - (velocity.multiply(friction)));
+  force = (force - (velocity.multiply2d(co_friction * dt)));
   Vector3 acceleration = force / mass;
   Vector3 k1 = acceleration * dt;
 
   // step 2
-  force = (force - (velocity + k1).multiply(friction));
+  force = (force - (velocity + k1).multiply2d(co_friction));
   acceleration = force / mass;
   Vector3 k2 = acceleration * dt;
 
-  // update entity.velocity
+  // update velocity
   velocity = velocity + (k1 + k2) / 2;
 
   // change in position (converted to pixels)
-  Vector3 dp = MetersToPixels(velocity * dt);
+  Vector3 dp = (velocity * dt);
 
   // apply new position
   position = position + dp;
+
+  force.reset();
 }
 
 // -----------------------------------------------------------------------------
 // euler_integration
 // -----------------------------------------------------------------------------
 void Movable::integrate_euler(float dt) {
-  // drag
-  force = (force - (velocity.multiply(friction)));
-
-  // acceleration = force / mass
+  force = (force - (velocity.multiply2d(co_friction * dt)));
   Vector3 acceleration = force / mass;
-
-  // difference in velocity = acceleration * difference time
-  Vector3 dv = acceleration * dt;
-
-  // velocity = velocity + difference in velocity
-  velocity += dv;
-
-  // difference in position = velocity * difference time
-  Vector3 dp = velocity * dt;
-
-  // convert to pixels
-  dp = MetersToPixels(dp);
-
-  // update position
-  position += dp;
+  Vector3 old_velocity = velocity;
+  velocity = velocity + acceleration * dt;
+  Vector3 dp = (old_velocity + velocity) * 0.5 * dt;
+  position = position + (dp);
+  force.reset();
 }
 
 // -----------------------------------------------------------------------------
 // addAnimation
 // -----------------------------------------------------------------------------
 void Movable::AddAnimation(const SpriteAnimation &a_sprite_anim) {
-  animations.insert(
-      std::make_pair(a_sprite_anim.name, std::move(a_sprite_anim)));
+  animations.insert(std::make_pair(a_sprite_anim.name, a_sprite_anim));
 }
 
 // ----------------------------------------------------------------------------------
@@ -87,7 +77,7 @@ void Movable::AddAnimation(const SpriteAnimation &a_sprite_anim) {
 // ----------------------------------------------------------------------------------
 void Movable::AddAnimation(const std::string &animname, const float frametime,
                            bool loopanim, std::vector<int> framelist) {
-  Sprite *sprite = static_cast<Sprite *>(renderable);
+  Sprite *sprite = dynamic_cast<Sprite *>(renderable);
   SpriteAnimation anim(animname, frametime, loopanim, framelist, sprite);
   AddAnimation(anim);
 }
